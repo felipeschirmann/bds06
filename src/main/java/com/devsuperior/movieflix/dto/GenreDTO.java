@@ -1,7 +1,6 @@
 package com.devsuperior.movieflix.dto;
 
 import java.io.Serializable;
-import java.util.Objects;
 
 import com.devsuperior.movieflix.entities.Genre;
 
@@ -37,23 +36,6 @@ public class GenreDTO implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		GenreDTO other = (GenreDTO) obj;
-		return Objects.equals(id, other.id);
 	}
 	
 }

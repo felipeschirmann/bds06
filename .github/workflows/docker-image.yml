@@ -27,4 +27,4 @@ jobs:
        username: ${{ secrets.DOCKER_HUB_USERNAME }}
        password: ${{ secrets.DOCKER_HUB_PASSWORD }}
        repository: felipeschirmann/bds06
-       tags: ${{github.run_number}}
+       tags: ${{github.run_number}},latest

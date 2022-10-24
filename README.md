@@ -18,3 +18,4 @@ This challenge is continuation of bds05
 
 ![Info](https://raw.githubusercontent.com/felipeschirmann/bds06/main/uml.png)
 
+[![Docker Image CI](https://github.com/felipeschirmann/bds06/actions/workflows/docker-image.yml/badge.svg)](https://github.com/felipeschirmann/bds06/actions/workflows/docker-image.yml)

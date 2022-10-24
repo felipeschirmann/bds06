@@ -17,3 +17,4 @@ This challenge is continuation of bds05
 - Implement the endpoint GET /users/profile
 
 ![Info](https://raw.githubusercontent.com/felipeschirmann/bds06/main/uml.png)
+

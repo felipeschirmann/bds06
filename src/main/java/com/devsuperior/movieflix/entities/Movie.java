@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Type;
+
 @Entity
 @Table(name = "tb_movie")
 public class Movie implements Serializable {
@@ -29,7 +31,8 @@ public class Movie implements Serializable {
 	private Integer year;
 	private String imgUrl;
 	
-	@Lob 
+	@Lob
+	@Type(type = "org.hibernate.type.TextType")
 	@Column(name="synopsis", length=512)
 	private String synopsis;
 	

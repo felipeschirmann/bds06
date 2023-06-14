@@ -6,17 +6,17 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.4.4</version>
+		<version>2.4.13</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.devsuperior</groupId>
-	<artifactId>bds05</artifactId>
+	<artifactId>bds06</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>bds05</name>
+	<name>bds06</name>
 	<description>Bootcamp Spring React DevSuperior</description>
 
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<spring-cloud.version>Hoxton.SR8</spring-cloud.version>
 		<app.profiles>test,dev,prod</app.profiles>
 	</properties>

@@ -45,15 +45,13 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
 
 		// H2
 		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
-			http.headers().frameOptions().disable();
+            http.headers(headers -> headers.frameOptions().disable());
 		}
-
-		http.authorizeRequests().antMatchers(PUBLIC).permitAll();
-		http.authorizeRequests().antMatchers(MEMBER_OR_VISITOR).permitAll();
-		http.authorizeRequests().antMatchers(MEMBER).hasAnyRole("MEMBER");
-		http.authorizeRequests().anyRequest().authenticated();
-
-		http.cors().configurationSource(corsConfigurationSource());
+        http.authorizeRequests(requests -> requests.antMatchers(PUBLIC).permitAll());
+        http.authorizeRequests(requests -> requests.antMatchers(MEMBER_OR_VISITOR).permitAll());
+        http.authorizeRequests(requests -> requests.antMatchers(MEMBER).hasAnyRole("MEMBER"));
+        http.authorizeRequests(requests -> requests.anyRequest().authenticated());
+        http.cors(cors -> cors.configurationSource(corsConfigurationSource()));
 	}
 
     @Bean

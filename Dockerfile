@@ -15,4 +15,4 @@ EXPOSE 8080
 COPY --from=builder /opt/app/target/*.jar /opt/app/*.jar
 ENTRYPOINT ["java", "-jar", "/opt/app/*.jar"]
 HEALTHCHECK --start-interval=30s --interval=10s --timeout=3s --retries=5 \
-  CMD curl -f http://localhost:8080/actuator/health/ping || exit 1
+  CMD curl -f http://localhost:8080/actuator/health || exit 1

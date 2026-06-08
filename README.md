@@ -68,9 +68,9 @@ You can run the complete development environment (Spring Boot Application + Post
   ```
 
 - **Ephemeral Mode (Interactive & Cleanup)**:
-  Runs containers in the foreground. Stopping the process (e.g., via `Ctrl+C` or if one container exits) will automatically shut down the environment, clean up the networks, and remove any stopped containers and anonymous volumes:
+  Runs containers in the foreground. Stopping the process (e.g., via `Ctrl+C` or if one container exits) will automatically shut down the environment. To ensure all stopped containers, networks, and anonymous volumes are fully cleaned up immediately afterwards, run:
   ```bash
-  docker compose --env-file .env.dev up --build --abort-on-container-exit --renew-anon-volumes --remove-orphans --rm
+  docker compose --env-file .env.dev up --build --abort-on-container-exit --renew-anon-volumes --remove-orphans; docker compose --env-file .env.dev down -v
   ```
 
 ### 2. View Application Logs

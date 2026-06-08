@@ -22,7 +22,7 @@ This challenge is continuation of bds05
 
 ## Local Development & SDKMAN! Configuration
 
-This project includes a `.sdkmanrc` file to manage the local runtime environment. To ensure the application runs with the recommended **Java 11 (11.0.22-tem)** without changing your system's global Java version:
+This project includes a `.sdkmanrc` file to manage the local runtime environment. To ensure the application compiles and runs with the correct target Java version, it is configured to use **Java 17 (17.0.10-tem)** without modifying your global settings:
 
 ### 1. SDKMAN! Environment Setup
 Make sure you have [SDKMAN!](https://sdkman.io/) installed. 
@@ -39,19 +39,19 @@ Make sure you have [SDKMAN!](https://sdkman.io/) installed.
 ### 2. Running the Application
 - **Run with H2 database (In-memory, recommended for quick tests):**
   ```bash
-  APP_PROFILE=test ./mvnw spring-boot:run
+  APP_PROFILE=test ./mvnw clean spring-boot:run
   ```
 - **Run with PostgreSQL (Development):**
   ```bash
-  ./mvnw spring-boot:run
+  ./mvnw clean spring-boot:run
   ```
 
 ### 3. Running Tests
 - **Run all tests (Unit + Integration):**
   ```bash
-  APP_PROFILE=test ./mvnw test
+  APP_PROFILE=test ./mvnw clean test
   ```
 - **Run only Integration Tests (`*IT`):**
   ```bash
-  APP_PROFILE=test ./mvnw test "-Dtest=*IT"
+  APP_PROFILE=test ./mvnw clean test "-Dtest=*IT"
   ```

@@ -101,3 +101,18 @@ The in-memory database UI can be accessed at:
 The interactive API documentation is exposed at:
 - **Swagger UI**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
 - **OpenAPI JSON Docs**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+
+## Code Coverage with JaCoCo
+
+The project is configured with the **JaCoCo Maven Plugin** to track test coverage. The configurations are also prepared to seamlessly integrate with cloud analysis tools like **SonarQube** or **SonarCloud**.
+
+### 1. Generating the Coverage Report
+To execute all unit and integration tests and generate the coverage report:
+```bash
+APP_PROFILE=test ./mvnw clean verify
+```
+
+### 2. Viewing the Report
+After running the command, JaCoCo will generate two types of reports in the `target/site/jacoco` directory:
+- **HTML Report (Human Readable)**: Open the local HTML file `target/site/jacoco/index.html` in your browser to inspect coverage details interactively.
+- **XML Report (Machine Readable)**: Located at `target/site/jacoco/jacoco.xml`, this is the file configured for cloud-based SonarQube/SonarCloud integration.

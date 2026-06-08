@@ -55,3 +55,20 @@ Make sure you have [SDKMAN!](https://sdkman.io/) installed.
   ```bash
   APP_PROFILE=test ./mvnw clean test "-Dtest=*IT"
   ```
+
+## Accessing Database and API Documentation
+
+When running the application locally under the **test** profile (`APP_PROFILE=test`):
+
+### 1. H2 Database Console
+The in-memory database UI can be accessed at:
+- **URL**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
+- **Driver Class**: `org.h2.Driver`
+- **JDBC URL**: `jdbc:h2:mem:testdb`
+- **User Name**: `sa`
+- **Password**: *(leave empty)*
+
+### 2. Swagger / OpenAPI Documentation
+The interactive API documentation is exposed at:
+- **Swagger UI**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- **OpenAPI JSON Docs**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)

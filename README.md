@@ -61,11 +61,17 @@ Make sure you have [SDKMAN!](https://sdkman.io/) installed.
 You can run the complete development environment (Spring Boot Application + PostgreSQL database) using Docker Compose. All configuration settings are separated into the `.env.dev` environment file.
 
 ### 1. Build and Run the Environment
-To build the application image and start both database and application containers under the development configuration, run:
-```bash
-docker compose --env-file .env.dev up --build -d
-```
-*Note: The `-d` flag runs the containers in detached (background) mode.*
+- **Detached Mode (Background)**:
+  Builds the application and starts the database and app containers in the background.
+  ```bash
+  docker compose --env-file .env.dev up --build -d
+  ```
+
+- **Ephemeral Mode (Interactive & Cleanup)**:
+  Runs containers in the foreground. Stopping the process (e.g., via `Ctrl+C` or if one container exits) will automatically shut down the environment, clean up the networks, and remove any stopped containers and anonymous volumes:
+  ```bash
+  docker compose --env-file .env.dev up --build --abort-on-container-exit --renew-anon-volumes --remove-orphans
+  ```
 
 ### 2. View Application Logs
 To watch the live logs from the running services:

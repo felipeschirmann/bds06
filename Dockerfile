@@ -1,4 +1,4 @@
-FROM eclipse-temurin:21.0.5_11-jdk-alpine AS builder
+FROM eclipse-temurin:17-jdk-alpine AS builder
 WORKDIR /opt/app
 COPY --chmod=755 .mvn/ .mvn
 COPY --chmod=755 ./mvnw pom.xml ./
@@ -6,7 +6,7 @@ RUN ./mvnw dependency:go-offline
 COPY ./src ./src
 RUN ./mvnw clean install
 
-FROM eclipse-temurin:21.0.5_11-jre-alpine AS final
+FROM eclipse-temurin:17-jre-alpine AS final
 RUN apk update && apk upgrade && apk --no-cache add curl
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring

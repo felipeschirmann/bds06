@@ -56,6 +56,29 @@ Make sure you have [SDKMAN!](https://sdkman.io/) installed.
   APP_PROFILE=test ./mvnw clean test "-Dtest=*IT"
   ```
 
+## Running with Docker Compose & Environment Files (Option B)
+
+You can run the complete development environment (Spring Boot Application + PostgreSQL database) using Docker Compose. All configuration settings are separated into the `.env.dev` environment file.
+
+### 1. Build and Run the Environment
+To build the application image and start both database and application containers under the development configuration, run:
+```bash
+docker compose --env-file .env.dev up --build -d
+```
+*Note: The `-d` flag runs the containers in detached (background) mode.*
+
+### 2. View Application Logs
+To watch the live logs from the running services:
+```bash
+docker compose logs -f
+```
+
+### 3. Stop the Containers
+To stop and remove the containers, networks, and volumes:
+```bash
+docker compose down
+```
+
 ## Accessing Database and API Documentation
 
 When running the application locally under the **test** profile (`APP_PROFILE=test`):

@@ -40,7 +40,7 @@ public class MovieService {
 
 	@Transactional(readOnly = true)
 	public Page<MovieDTO> findAllByGenrePaged(Long genreId, Pageable pageable) {
-		Genre genre = (genreId == 0) ? null : genreRepository.getOne(genreId);
+		Genre genre = (genreId == 0) ? null : genreRepository.getReferenceById(genreId);
 		Page<Movie> list = repository.find(genre, pageable);
 		return list.map(x -> new MovieDTO(x));
 	}

@@ -19,3 +19,39 @@ This challenge is continuation of bds05
 ![Info](https://raw.githubusercontent.com/felipeschirmann/bds06/main/uml.png)
 
 [![Docker Image CI](https://github.com/felipeschirmann/bds06/actions/workflows/docker-image.yml/badge.svg)](https://github.com/felipeschirmann/bds06/actions/workflows/docker-image.yml)
+
+## Local Development & SDKMAN! Configuration
+
+This project includes a `.sdkmanrc` file to manage the local runtime environment. To ensure the application runs with the recommended **Java 11 (11.0.22-tem)** without changing your system's global Java version:
+
+### 1. SDKMAN! Environment Setup
+Make sure you have [SDKMAN!](https://sdkman.io/) installed. 
+
+- **Option A (Manual Switch)**: When entering the project directory, run:
+  ```bash
+  sdk env
+  ```
+- **Option B (Auto Switch)**: To have SDKMAN! switch versions automatically when you `cd` into the project directory, enable `sdkman_auto_env` in your config. Open `~/.sdkman/etc/config` and set:
+  ```properties
+  sdkman_auto_env=true
+  ```
+
+### 2. Running the Application
+- **Run with H2 database (In-memory, recommended for quick tests):**
+  ```bash
+  APP_PROFILE=test ./mvnw spring-boot:run
+  ```
+- **Run with PostgreSQL (Development):**
+  ```bash
+  ./mvnw spring-boot:run
+  ```
+
+### 3. Running Tests
+- **Run all tests (Unit + Integration):**
+  ```bash
+  APP_PROFILE=test ./mvnw test
+  ```
+- **Run only Integration Tests (`*IT`):**
+  ```bash
+  APP_PROFILE=test ./mvnw test "-Dtest=*IT"
+  ```

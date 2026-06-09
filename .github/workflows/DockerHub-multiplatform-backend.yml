@@ -26,7 +26,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  docker:
+  test-and-scan:
+    name: Test & Sonar Scan
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -61,15 +62,26 @@ jobs:
           APP_PROFILE: test
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=felipeschirmann_bds06
 
+  build-and-push:
+    name: Docker Build & Push
+    runs-on: ubuntu-latest
+    needs: test-and-scan
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v2
+
       - name: Login to Docker Hub
         uses: docker/login-action@v2
         with:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
@@ -79,8 +91,9 @@ jobs:
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bds06:${{github.run_number}},${{ secrets.DOCKER_HUB_USERNAME }}/bds06:latest
 
   deploy:
+    name: Deploy to OCI VM
     runs-on: ubuntu-latest
-    needs: docker
+    needs: build-and-push
     steps:
       - name: Checkout
         uses: actions/checkout@v3

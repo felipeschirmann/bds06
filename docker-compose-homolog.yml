@@ -7,9 +7,9 @@ services:
     ports:
       - "${POSTGRES_PORT:-8082}:5432"
     environment:
-      POSTGRES_DB: ${POSTGRES_DB}
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-movieflix_db}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -24,15 +24,15 @@ services:
     ports:
       - "${APP_PORT:-8081}:8080"
     environment:
-      APP_PROFILE: ${APP_PROFILE}
-      BDS06_DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}
-      BDS06_DATABASE_USERNAME: ${POSTGRES_USER}
-      BDS06_DATABASE_PASSWORD: ${POSTGRES_PASSWORD}
-      CLIENT_ID: ${CLIENT_ID}
-      CLIENT_SECRET: ${CLIENT_SECRET}
-      JWT_SECRET: ${JWT_SECRET}
-      JWT_DURATION: ${JWT_DURATION}
-      CORS_ORIGINS: ${CORS_ORIGINS}
+      APP_PROFILE: ${APP_PROFILE:-homolog}
+      BDS06_DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB:-movieflix_db}
+      BDS06_DATABASE_USERNAME: ${POSTGRES_USER:-postgres}
+      BDS06_DATABASE_PASSWORD: ${POSTGRES_PASSWORD:-postgres}
+      CLIENT_ID: ${CLIENT_ID:-myclientid}
+      CLIENT_SECRET: ${CLIENT_SECRET:-myclientsecret}
+      JWT_SECRET: ${JWT_SECRET:-MY-JWT-SECRET}
+      JWT_DURATION: ${JWT_DURATION:-86400}
+      CORS_ORIGINS: ${CORS_ORIGINS:-*}
     depends_on:
       db:
         condition: service_healthy

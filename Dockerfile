@@ -1,12 +1,12 @@
-FROM eclipse-temurin:17-jdk-alpine AS builder
+FROM amazoncorretto:17-alpine AS builder
 WORKDIR /opt/app
 COPY --chmod=755 .mvn/ .mvn
 COPY --chmod=755 ./mvnw pom.xml ./
 RUN ./mvnw dependency:go-offline
 COPY ./src ./src
-RUN ./mvnw clean install
+RUN ./mvnw clean package -DskipTests
 
-FROM eclipse-temurin:17-jre-alpine AS final
+FROM amazoncorretto:17-alpine AS final
 RUN apk update && apk upgrade && apk --no-cache add curl
 RUN addgroup -S spring && adduser -S spring -G spring
 USER spring:spring

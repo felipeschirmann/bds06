@@ -62,26 +62,6 @@ jobs:
           APP_PROFILE: test
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=felipeschirmann_bds06 -Dsonar.qualitygate.wait=true
 
-      - name: Send Telegram Notification
-        if: always()
-        run: |
-          if [ "${{ job.status }}" = "success" ]; then
-            STATUS_MSG="✅ Success"
-          else
-            STATUS_MSG="❌ Failure"
-          fi
-          
-          TEXT="🚀 *BDS06 CI/CD Notification*
-          
-          *Job:* Test & Sonar Scan
-          *Status:* $STATUS_MSG
-          *Commit:* \`${{ github.sha }}\`
-          *Author:* ${{ github.actor }}"
-          
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -H "Content-Type: application/json" \
-            -d "$(jq -n --arg chat_id "${{ secrets.TELEGRAM_CHAT_ID }}" --arg text "$TEXT" --arg parse_mode "Markdown" '{chat_id: $chat_id, text: $text, parse_mode: $parse_mode}')"
-
   build-and-push:
     name: Docker Build & Push
     runs-on: ubuntu-latest
@@ -114,26 +94,6 @@ jobs:
           push: true
           tags: ${{ secrets.DOCKER_HUB_USERNAME }}/bds06:sha-${{ steps.vars.outputs.sha_short }},${{ secrets.DOCKER_HUB_USERNAME }}/bds06:latest
 
-      - name: Send Telegram Notification
-        if: always()
-        run: |
-          if [ "${{ job.status }}" = "success" ]; then
-            STATUS_MSG="✅ Success"
-          else
-            STATUS_MSG="❌ Failure"
-          fi
-          
-          TEXT="🚀 *BDS06 CI/CD Notification*
-          
-          *Job:* Docker Build & Push
-          *Status:* $STATUS_MSG
-          *Commit:* \`${{ github.sha }}\`
-          *Author:* ${{ github.actor }}"
-          
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -H "Content-Type: application/json" \
-            -d "$(jq -n --arg chat_id "${{ secrets.TELEGRAM_CHAT_ID }}" --arg text "$TEXT" --arg parse_mode "Markdown" '{chat_id: $chat_id, text: $text, parse_mode: $parse_mode}')"
-
   deploy:
     name: Deploy to OCI VM
     runs-on: ubuntu-latest
@@ -162,30 +122,12 @@ jobs:
           username: ${{ secrets.ORACLE_SSH_USER }}
           key: ${{ secrets.ORACLE_SSH_KEY }}
           script: |
+            docker rm -f bds06-app bds06-postgres || true
+            rm -rf /home/${{ secrets.ORACLE_SSH_USER }}/app
             mkdir -p /home/${{ secrets.ORACLE_SSH_USER }}/bds06
             cd /home/${{ secrets.ORACLE_SSH_USER }}/bds06
             sed -i '/^IMAGE_TAG=/d' .env.dev
             echo "IMAGE_TAG=sha-${{ steps.vars.outputs.sha_short }}" >> .env.dev
             docker compose -f docker-compose-homolog.yml --env-file .env.dev pull
             docker compose -f docker-compose-homolog.yml --env-file .env.dev up -d --force-recreate
-            docker image prune -f
-
-      - name: Send Telegram Notification
-        if: always()
-        run: |
-          if [ "${{ job.status }}" = "success" ]; then
-            STATUS_MSG="✅ Success"
-          else
-            STATUS_MSG="❌ Failure"
-          fi
-          
-          TEXT="🚀 *BDS06 CI/CD Notification*
-          
-          *Job:* Deploy to OCI VM
-          *Status:* $STATUS_MSG
-          *Commit:* \`${{ github.sha }}\`
-          *Author:* ${{ github.actor }}"
-          
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -H "Content-Type: application/json" \
-            -d "$(jq -n --arg chat_id "${{ secrets.TELEGRAM_CHAT_ID }}" --arg text "$TEXT" --arg parse_mode "Markdown" '{chat_id: $chat_id, text: $text, parse_mode: $parse_mode}')"
+            docker image prune -a -f

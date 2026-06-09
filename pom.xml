@@ -23,6 +23,10 @@
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.build.directory}/site/jacoco/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.language>java</sonar.language>
+		<!-- SonarCloud Cloud Integration -->
+		<sonar.projectKey>felipeschirmann_bds06</sonar.projectKey>
+		<sonar.organization>felipeschirmann</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 
 	<dependencies>

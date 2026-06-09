@@ -5,7 +5,7 @@ services:
     image: postgres:15-alpine
     container_name: bds06-postgres
     ports:
-      - "${POSTGRES_PORT:-5433}:5432"
+      - "${POSTGRES_PORT:-8082}:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}

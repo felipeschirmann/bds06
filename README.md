@@ -1,118 +1,103 @@
-## challenge of use cases
+# 🎬 Movieflix - Case Study & CI/CD Pipeline
 
-This challenge is continuation of bds05
+Welcome to the **Movieflix** backend application, a robust Spring Boot project representing the continuation of advanced use-cases modeling, security validation, exception handling, and automated DevOps integration.
 
-![SpringBoot](https://img.shields.io/badge/Spring%20Boot-Version%3A%202.4.4-green)
+---
 
-[![Maven](https://badgen.net/badge/icon/maven?icon=maven&label)](https://maven.apache.org/) 
+## 🚀 Technology Stack & Badges
 
-![Info](https://img.shields.io/badge/Junit-Runs%3A%2020%2F20%20%7C%20Errors%3A%200%20%7C%20Failures%3A%200-red)
+<div align="left">
+  <img src="https://img.shields.io/badge/Java-17-orange?style=for-the-badge&logo=openjdk&logoColor=white" alt="Java 17" />
+  <img src="https://img.shields.io/badge/Spring%20Boot-2.7.3-brightgreen?style=for-the-badge&logo=springboot&logoColor=white" alt="Spring Boot" />
+  <img src="https://img.shields.io/badge/PostgreSQL-15-blue?style=for-the-badge&logo=postgresql&logoColor=white" alt="PostgreSQL" />
+  <img src="https://img.shields.io/badge/Docker-Multi--Platform-cyan?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
+  <img src="https://img.shields.io/badge/SonarCloud-Quality%20Gate-success?style=for-the-badge&logo=sonarcloud&logoColor=white" alt="SonarCloud" />
+</div>
 
-[![Info](https://img.shields.io/badge/Project-Info-blue?style=flat-square&logo=data:image/svg%2bxml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iaXNvLTg4NTktMSI/Pg0KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDE5LjAuMCwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMCkgIC0tPg0KPHN2ZyB2ZXJzaW9uPSIxLjEiIGlkPSJDYXBhXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4Ig0KCSB2aWV3Qm94PSIwIDAgNTEyIDUxMiIgc3R5bGU9ImVuYWJsZS1iYWNrZ3JvdW5kOm5ldyAwIDAgNTEyIDUxMjsiIHhtbDpzcGFjZT0icHJlc2VydmUiPg0KPHBhdGggc3R5bGU9ImZpbGw6IzBBNEVBRjsiIGQ9Ik0yNTYsNTEyYy02OC4zOCwwLTEzMi42NjctMjYuNjI5LTE4MS4wMi03NC45OEMyNi42MjksMzg4LjY2NywwLDMyNC4zOCwwLDI1Ng0KCVMyNi42MjksMTIzLjMzMyw3NC45OCw3NC45OEMxMjMuMzMzLDI2LjYyOSwxODcuNjIsMCwyNTYsMHMxMzIuNjY3LDI2LjYyOSwxODEuMDIsNzQuOThDNDg1LjM3MSwxMjMuMzMzLDUxMiwxODcuNjIsNTEyLDI1Ng0KCXMtMjYuNjI5LDEzMi42NjctNzQuOTgsMTgxLjAyQzM4OC42NjcsNDg1LjM3MSwzMjQuMzgsNTEyLDI1Niw1MTJ6Ii8+DQo8cGF0aCBzdHlsZT0iZmlsbDojMDYzRThCOyIgZD0iTTQzNy4wMiw3NC45OEMzODguNjY3LDI2LjYyOSwzMjQuMzgsMCwyNTYsMHY1MTJjNjguMzgsMCwxMzIuNjY3LTI2LjYyOSwxODEuMDItNzQuOTgNCglDNDg1LjM3MSwzODguNjY3LDUxMiwzMjQuMzgsNTEyLDI1NlM0ODUuMzcxLDEyMy4zMzMsNDM3LjAyLDc0Ljk4eiIvPg0KPHBhdGggc3R5bGU9ImZpbGw6I0ZGRkZGRjsiIGQ9Ik0yNTYsMTg1Yy0zMC4zMjcsMC01NS0yNC42NzMtNTUtNTVzMjQuNjczLTU1LDU1LTU1czU1LDI0LjY3Myw1NSw1NVMyODYuMzI3LDE4NSwyNTYsMTg1eiBNMzAxLDM5NQ0KCVYyMTVIMTkxdjMwaDMwdjE1MGgtMzB2MzBoMTQwdi0zMEgzMDF6Ii8+DQo8Zz4NCgk8cGF0aCBzdHlsZT0iZmlsbDojQ0NFRkZGOyIgZD0iTTI1NiwxODVjMzAuMzI3LDAsNTUtMjQuNjczLDU1LTU1cy0yNC42NzMtNTUtNTUtNTVWMTg1eiIvPg0KCTxwb2x5Z29uIHN0eWxlPSJmaWxsOiNDQ0VGRkY7IiBwb2ludHM9IjMwMSwzOTUgMzAxLDIxNSAyNTYsMjE1IDI1Niw0MjUgMzMxLDQyNSAzMzEsMzk1IAkiLz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjxnPg0KPC9nPg0KPGc+DQo8L2c+DQo8Zz4NCjwvZz4NCjwvc3ZnPg0K)](https://www.linkedin.com/in/felipeschirmann)
+---
 
-### Implementations 
+## 📌 Implementation Achievements
 
-- Implement, model with seed of database
-- Implement excections, validations and security
-- Implement the endpoint GET /users/profile
+* **Security Config**: Fully customized Spring Security OAuth2.0 authentication workflow. Resolved role-based access validation anomalies using annotations.
+* **UML Domain Mapping**: Implemented Movie-Genre relations, returning full objects mapping DTOs, and validating endpoints.
+* **Autonomous CD (Oracle Cloud VM)**: Full three-stage pipeline (Test & Scan ➡️ Docker Buildx ➡️ Deploy) to remote OCI VM with dynamic SHA tagging.
+* **JVM Performance**: Replaced old dependencies cache targets to run seamlessly on macOS and Linux ARM64/AMD64 architectures.
 
-![Info](https://raw.githubusercontent.com/felipeschirmann/bds06/main/uml.png)
+---
 
-[![Docker Image CI](https://github.com/felipeschirmann/bds06/actions/workflows/docker-image.yml/badge.svg)](https://github.com/felipeschirmann/bds06/actions/workflows/docker-image.yml)
+## 🗺️ Domain Model (UML)
 
-## Local Development & SDKMAN! Configuration
+```
+       +------------+                  +------------+
+       |   Genre    | 1            0..*|   Movie    |
+       +------------+------------------+------------+
+       | - id       |                  | - id       |
+       | - name     |                  | - title    |
+       +------------+                  | - subTitle |
+                                       | - year     |
+                                       | - imgUrl   |
+                                       | - synopsis |
+                                       +------------+
+```
 
-This project includes a `.sdkmanrc` file to manage the local runtime environment. To ensure the application compiles and runs with the correct target Java version, it is configured to use **Java 17 (17.0.10-tem)** without modifying your global settings:
+---
 
-### 1. SDKMAN! Environment Setup
-Make sure you have [SDKMAN!](https://sdkman.io/) installed. 
+## 🛠️ Local Development & Quick Start
 
-- **Option A (Manual Switch)**: When entering the project directory, run:
+Follow these steps to set up the application on your local machine.
+
+### 1. Runtime Environment (SDKMAN!)
+This project configures **Java 17 (17.0.10-tem)** using a local `.sdkmanrc` file. 
+
+* Ensure you have [SDKMAN!](https://sdkman.io/) installed.
+* Run to switch to the correct JRE version:
   ```bash
   sdk env
   ```
-- **Option B (Auto Switch)**: To have SDKMAN! switch versions automatically when you `cd` into the project directory, enable `sdkman_auto_env` in your config. Open `~/.sdkman/etc/config` and set:
-  ```properties
-  sdkman_auto_env=true
-  ```
+* *Tip*: Enable automatic switching by changing `sdkman_auto_env=true` in `~/.sdkman/etc/config`.
 
-### 2. Running the Application
-- **Run with H2 database (In-memory, recommended for quick tests):**
-  ```bash
-  APP_PROFILE=test ./mvnw clean spring-boot:run
-  ```
-- **Run with PostgreSQL (Development):**
-  ```bash
-  ./mvnw clean spring-boot:run
-  ```
+### 2. Private Environment Configuration (`.env.dev`)
+The project reads private configs from `.env.dev`, which is gitignored to protect secrets. 
 
-### 3. Running Tests
-- **Run all tests (Unit + Integration):**
-  ```bash
-  APP_PROFILE=test ./mvnw clean test
-  ```
-- **Run only Integration Tests (`*IT`):**
-  ```bash
-  APP_PROFILE=test ./mvnw clean test "-Dtest=*IT"
-  ```
+1. Copy the template example file:
+   ```bash
+   cp .env.example .env.dev
+   ```
+2. Open `.env.dev` and fill in your database, client secrets, and JWT secret tokens.
 
-## Running with Docker Compose & Environment Files (Option B)
+---
 
-You can run the complete development environment (Spring Boot Application + PostgreSQL database) using Docker Compose. All configuration settings are separated into the `.env.dev` environment file.
+## 🐳 Running with Docker
 
-### 1. Build and Run the Environment
-- **Detached Mode (Background)**:
-  Builds the application and starts the database and app containers in the background.
-  ```bash
-  docker compose --env-file .env.dev up --build -d
-  ```
-
-- **Ephemeral Mode (Interactive & Cleanup)**:
-  Runs containers in the foreground. Stopping the process (e.g., via `Ctrl+C` or if one container exits) will automatically shut down the environment. To ensure all stopped containers, networks, and anonymous volumes are fully cleaned up immediately afterwards, run:
-  ```bash
-  docker compose --env-file .env.dev up --build --abort-on-container-exit --renew-anon-volumes --remove-orphans; docker compose --env-file .env.dev down -v
-  ```
-
-### 2. View Application Logs
-To watch the live logs from the running services:
+### Development Stack (Local Build)
+Builds the code locally and spins up PostgreSQL alongside the application:
 ```bash
-docker compose logs -f
+docker compose --env-file .env.dev up --build -d
 ```
 
-### 3. Stop the Containers
-To stop and remove the containers, networks, and volumes:
+### Homolog VM Stack (Pre-Built Images)
+To run the production/homolog setup without compiling source code locally (resolves remote image tags directly from Docker Hub):
 ```bash
-docker compose down
+docker compose -f docker-compose-homolog.yml --env-file .env.dev up -d
 ```
 
-## Accessing Database and API Documentation
+---
 
-When running the application locally under the **test** profile (`APP_PROFILE=test`):
+## 🎯 Testing & Verification
 
-### 1. H2 Database Console
-The in-memory database UI can be accessed at:
-- **URL**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console)
-- **Driver Class**: `org.h2.Driver`
-- **JDBC URL**: `jdbc:h2:mem:testdb`
-- **User Name**: `sa`
-- **Password**: *(leave empty)*
+| Command | Purpose |
+| :--- | :--- |
+| `APP_PROFILE=test ./mvnw clean test` | Runs Unit & Integration Test Suites |
+| `APP_PROFILE=test ./mvnw clean verify` | Runs all tests and generates **JaCoCo** code coverage |
+| `docker image prune -a -f` | Cleans all unused docker containers and images (frees disk space) |
 
-### 2. Swagger / OpenAPI Documentation
-The interactive API documentation is exposed at:
-- **Swagger UI**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
-- **OpenAPI JSON Docs**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+*The JaCoCo coverage report will be available locally at:* `target/site/jacoco/index.html`
 
-## Code Coverage with JaCoCo
+---
 
-The project is configured with the **JaCoCo Maven Plugin** to track test coverage. The configurations are also prepared to seamlessly integrate with cloud analysis tools like **SonarQube** or **SonarCloud**.
+## 📖 API Documentation & H2 Console
 
-### 1. Generating the Coverage Report
-To execute all unit and integration tests and generate the coverage report:
-```bash
-APP_PROFILE=test ./mvnw clean verify
-```
-
-### 2. Viewing the Report
-After running the command, JaCoCo will generate two types of reports in the `target/site/jacoco` directory:
-- **HTML Report (Human Readable)**: Open the local HTML file `target/site/jacoco/index.html` in your browser to inspect coverage details interactively.
-- **XML Report (Machine Readable)**: Located at `target/site/jacoco/jacoco.xml`, this is the file configured for cloud-based SonarQube/SonarCloud integration.
+When running locally under the `test` profile:
+* **Swagger Interactive UI**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+* **OpenAPI Specs (JSON)**: [http://localhost:8080/v3/api-docs](http://localhost:8080/v3/api-docs)
+* **H2 Database Console**: [http://localhost:8080/h2-console](http://localhost:8080/h2-console) (JDBC URL: `jdbc:h2:mem:testdb`, User: `sa`, No Password).

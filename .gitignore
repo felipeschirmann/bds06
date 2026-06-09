@@ -34,5 +34,5 @@ build/
 /.DS_Store
 
 ### Local private files ###
-.env.dev
+.env.homolog
 README-local.md

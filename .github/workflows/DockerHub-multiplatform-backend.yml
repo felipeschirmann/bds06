@@ -112,7 +112,7 @@ jobs:
           host: ${{ secrets.ORACLE_SSH_HOST }}
           username: ${{ secrets.ORACLE_SSH_USER }}
           key: ${{ secrets.ORACLE_SSH_KEY }}
-          source: "docker-compose-homolog.yml,.env.dev"
+          source: "docker-compose-homolog.yml,.env.homolog"
           target: "/home/${{ secrets.ORACLE_SSH_USER }}/bds06"
 
       - name: Deploy to Oracle Cloud via SSH
@@ -126,8 +126,8 @@ jobs:
             rm -rf /home/${{ secrets.ORACLE_SSH_USER }}/app
             mkdir -p /home/${{ secrets.ORACLE_SSH_USER }}/bds06
             cd /home/${{ secrets.ORACLE_SSH_USER }}/bds06
-            sed -i '/^IMAGE_TAG=/d' .env.dev
-            echo "IMAGE_TAG=sha-${{ steps.vars.outputs.sha_short }}" >> .env.dev
-            docker compose -f docker-compose-homolog.yml --env-file .env.dev pull
-            docker compose -f docker-compose-homolog.yml --env-file .env.dev up -d --force-recreate
+            sed -i '/^IMAGE_TAG=/d' .env.homolog
+            echo "IMAGE_TAG=sha-${{ steps.vars.outputs.sha_short }}" >> .env.homolog
+            docker compose -f docker-compose-homolog.yml --env-file .env.homolog pull
+            docker compose -f docker-compose-homolog.yml --env-file .env.homolog up -d --force-recreate
             docker image prune -a -f

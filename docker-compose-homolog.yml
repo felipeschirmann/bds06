@@ -5,7 +5,7 @@ services:
     image: postgres:15-alpine
     container_name: bds06-postgres
     ports:
-      - "${POSTGRES_PORT:-5432}:5432"
+      - "${POSTGRES_PORT:-5433}:5432"
     environment:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
@@ -22,7 +22,7 @@ services:
     image: ${DOCKER_HUB_USERNAME:-felipeschirmann}/bds06:${IMAGE_TAG:-latest}
     container_name: bds06-app
     ports:
-      - "${APP_PORT:-8080}:8080"
+      - "${APP_PORT:-8081}:8080"
     environment:
       APP_PROFILE: ${APP_PROFILE}
       BDS06_DATABASE_URL: jdbc:postgresql://db:5432/${POSTGRES_DB}

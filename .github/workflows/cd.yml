@@ -96,6 +96,16 @@ jobs:
           source: "docker-compose-homolog.yml,.env.homolog"
           target: "/home/${{ secrets.ORACLE_SSH_USER }}/bds06"
 
+      - name: Copy Nginx config via SCP
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.ORACLE_SSH_HOST }}
+          username: ${{ secrets.ORACLE_SSH_USER }}
+          key: ${{ secrets.ORACLE_SSH_KEY }}
+          source: "nginx/bds06.conf"
+          target: "/tmp"
+          strip_components: 1
+
       - name: Deploy to Oracle Cloud via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -112,3 +122,6 @@ jobs:
             docker compose -f docker-compose-homolog.yml --env-file .env.homolog pull
             docker compose -f docker-compose-homolog.yml --env-file .env.homolog up -d --force-recreate
             docker image prune -a -f
+            sudo mv /tmp/bds06.conf /etc/nginx/conf.d/bds06.conf
+            sudo nginx -t && sudo nginx -s reload
+

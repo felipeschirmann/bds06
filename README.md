@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/Docker-Multi--Platform-cyan?style=for-the-badge&logo=docker&logoColor=white" alt="Docker" />
   <img src="https://img.shields.io/badge/SonarCloud-Quality%20Gate-success?style=for-the-badge&logo=sonarcloud&logoColor=white" alt="SonarCloud" />
   <img src="https://img.shields.io/badge/GitHub%20Actions-CI%2FCD-blueviolet?style=for-the-badge&logo=githubactions&logoColor=white" alt="GitHub Actions" />
-  <a href="https://bds06.homolog.felipeschirmann.dev.br/swagger-ui/index.html">
+  <a href="https://bds06-homolog.felipeschirmann.dev.br/swagger-ui/index.html">
     <img src="https://img.shields.io/badge/Live%20Demo-Homolog-blue?style=for-the-badge&logo=googlecloud&logoColor=white" alt="Live Demo" />
   </a>
 </div>
